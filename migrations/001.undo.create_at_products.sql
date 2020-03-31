@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS at_products CASCADE;
