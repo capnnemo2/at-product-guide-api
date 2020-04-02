@@ -1,4 +1,4 @@
 TRUNCATE
-    at_products,
-    at_comments
+    products,
+    comments
     RESTART IDENTITY CASCASE;
