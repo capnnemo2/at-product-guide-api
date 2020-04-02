@@ -5,6 +5,8 @@ const helpers = require("./test-helpers");
 describe("products endpoints", function() {
   let db;
 
+  const { testProducts } = helpers.makeFixtures();
+
   before("make knex instance", () => {
     db = knex({
       client: "pg",
@@ -25,6 +27,21 @@ describe("products endpoints", function() {
         return supertest(app)
           .get("/api/products")
           .expect(200, []);
+      });
+    });
+
+    context(`Given there are products in the database`, () => {
+      beforeEach("insert products", () =>
+        helpers.seedProducts(db, testProducts)
+      );
+
+      it(`responds with 200 and all of the products`, () => {
+        const expectedProducts = testProducts.map(product =>
+          helpers.makeExpectedProduct(testProducts)
+        );
+        return supertest(app)
+          .get("/api/products")
+          .expect(200, expectedProducts);
       });
     });
   });

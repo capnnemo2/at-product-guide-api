@@ -72,6 +72,27 @@ function makeProductsArray() {
   ];
 }
 
+function makeExpectedProduct(product) {
+  return {
+    id: product.id,
+    product_code: product.product_code,
+    product_name: product.product_name,
+    product_type: product.product_type,
+    mesh: product.mesh,
+    hard_three_eighths: product.hard_three_eighths,
+    hard_one_quarter: product.hard_one_quarter,
+    soft_three_eighths: product.soft_three_eighths,
+    prep_bend: product.prep_bend,
+    prep_weld: product.prep_weld,
+    weld: product.weld
+  };
+}
+
+function makeFixtures() {
+  const testProducts = makeProductsArray();
+  return { testProducts };
+}
+
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
@@ -81,7 +102,21 @@ function cleanTables(db) {
   );
 }
 
+function seedProducts(db, products) {
+  return db
+    .into("products")
+    .insert(products)
+    .then(() =>
+      db.raw(`SELECT setval('products_id_seq', ?)`, [
+        products[products.length - 1].id
+      ])
+    );
+}
+
 module.exports = {
   makeProductsArray,
-  cleanTables
+  makeExpectedProduct,
+  makeFixtures,
+  cleanTables,
+  seedProducts
 };
