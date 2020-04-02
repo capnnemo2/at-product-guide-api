@@ -2,7 +2,7 @@ const xss = require("xss");
 
 const ProductsService = {
   getAllProducts(db) {
-    return db.from("at_products").select("*");
+    return db.from("products").select("*");
   },
 
   getById(db, id) {
@@ -13,7 +13,7 @@ const ProductsService = {
 
   getCommentsForProduct(db, product_id) {
     return db
-      .from("at_comments AS comm")
+      .from("comments AS comm")
       .SELECT("comm.id", "comm.user_name", "comm.content")
       .where("comm.product_id", product_id);
   },
@@ -21,7 +21,7 @@ const ProductsService = {
   insertProduct(db, newProduct) {
     return db
       .insert(newProduct)
-      .into("at_products")
+      .into("products")
       .returning("*")
       .then(([product]) => product)
       .then(product => ProductsService.getById(db, product.id));

@@ -1,4 +1,4 @@
-CREATE TABLE at_products (
+CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     product_code TEXT NOT NULL,
     product_name TEXT NOT NULL,
