@@ -72,42 +72,19 @@ function makeProductsArray() {
   ];
 }
 
-// function makeExpectedProduct(product) {
-//   console.log(product);
-//   return {
-//     id: product.id,
-//     product_code: product.product_code,
-//     product_name: product.product_name,
-//     product_type: product.product_type,
-//     mesh: product.mesh.length ? product.mesh[0] : "",
-//     hard_three_eighths: product.hard_three_eighths.length
-//       ? product.hard_three_eighths[0]
-//       : "",
-//     hard_one_quarter: product.hard_one_quarter.length
-//       ? product.hard_one_quarter[0]
-//       : "",
-//     soft_three_eighths: product.soft_three_eighths.length
-//       ? product.soft_three_eighths[0]
-//       : "",
-//     prep_bend: product.prep_bend.length ? product.prep_bend[0] : "",
-//     prep_weld: product.prep_weld.length ? product.prep_weld[0] : "",
-//     weld: product.weld.length ? product.weld[0] : ""
-//   };
-// }
-
 function makeExpectedProduct(product) {
   return {
     id: product.id,
     product_code: product.product_code,
     product_name: product.product_name,
     product_type: product.product_type,
-    mesh: product.mesh,
-    hard_three_eighths: product.hard_three_eighths,
-    hard_one_quarter: product.hard_one_quarter,
-    soft_three_eighths: product.soft_three_eighths,
-    prep_bend: product.prep_bend,
-    prep_weld: product.prep_weld,
-    weld: product.weld
+    mesh: product.mesh.join(","),
+    hard_three_eighths: product.hard_three_eighths.join(","),
+    hard_one_quarter: product.hard_one_quarter.join(","),
+    soft_three_eighths: product.soft_three_eighths.join(","),
+    prep_bend: product.prep_bend.join(","),
+    prep_weld: product.prep_weld.join(","),
+    weld: product.weld.join(",")
   };
 }
 

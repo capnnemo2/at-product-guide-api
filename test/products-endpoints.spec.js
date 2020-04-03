@@ -6,7 +6,6 @@ describe("products endpoints", function() {
   let db;
 
   const { testProducts } = helpers.makeFixtures();
-  console.log(testProducts);
 
   before("make knex instance", () => {
     db = knex({
