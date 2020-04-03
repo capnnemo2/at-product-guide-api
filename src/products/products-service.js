@@ -6,9 +6,12 @@ const ProductsService = {
       .from("products")
       .select(
         "*",
-        db.raw(`json_build_array(mesh, hard_three_eighths, hard_one_quarter)`),
-        db.raw(`array_to_json(mesh)`)
-      );
+        // db.raw(`json_build_array(mesh, hard_three_eighths, hard_one_quarter)`),
+        db.raw(
+          `array_to_json(array_agg(json_build_array(mesh, hard_three_eighths, hard_one_quarter, soft_three_eighths, prep_bend, prep_weld, weld)))`
+        )
+      )
+      .groupBy("id");
   },
 
   getById(db, id) {
