@@ -66,18 +66,25 @@ const ProductsService = {
   // };
 
   serializeProduct(product) {
+    console.log(product.mesh ? product.mesh : []);
     return {
       id: product.id,
       product_code: xss(product.product_code),
       product_name: xss(product.product_name),
       product_type: xss(product.product_type),
-      mesh: product.mesh.map(m => xss(m)),
-      hard_three_eighths: product.hard_three_eighths.map(hte => xss(hte)),
-      hard_one_quarter: product.hard_one_quarter.map(hoq => xss(hoq)),
-      soft_three_eighths: product.soft_three_eighths.map(ste => xss(ste)),
-      prep_bend: product.prep_bend.map(pb => xss(pb)),
-      prep_weld: product.prep_weld.map(pw => xss(pw)),
-      weld: product.weld.map(w => xss(w))
+      mesh: product.mesh ? product.mesh.map(m => xss(m)) : [],
+      hard_three_eighths: product.hard_three_eighths
+        ? product.hard_three_eighths.map(hte => xss(hte))
+        : [],
+      hard_one_quarter: product.hard_one_quarter
+        ? product.hard_one_quarter.map(hoq => xss(hoq))
+        : [],
+      soft_three_eighths: product.soft_three_eighths
+        ? product.soft_three_eighths.map(ste => xss(ste))
+        : [],
+      prep_bend: product.prep_bend ? product.prep_bend.map(pb => xss(pb)) : [],
+      prep_weld: product.prep_weld ? product.prep_weld.map(pw => xss(pw)) : [],
+      weld: product.weld ? product.weld.map(w => xss(w)) : []
     };
   }
 };
