@@ -48,19 +48,36 @@ const ProductsService = {
     return db.where({ id }).update(newProductFields);
   },
 
+  //   serializeProduct(product) {
+  //     return {
+  //       id: product.id,
+  //       product_code: xss(product.product_code),
+  //       product_name: xss(product.product_name),
+  //       product_type: xss(product.product_type),
+  //       mesh: xss(product.mesh),
+  //       hard_three_eighths: xss(product.hard_three_eighths),
+  //       hard_one_quarter: xss(product.hard_one_quarter),
+  //       soft_three_eighths: xss(product.soft_three_eighths),
+  //       prep_bend: xss(product.prep_bend),
+  //       prep_weld: xss(product.prep_weld),
+  //       weld: xss(product.weld)
+  //     };
+  //   }
+  // };
+
   serializeProduct(product) {
     return {
       id: product.id,
       product_code: xss(product.product_code),
       product_name: xss(product.product_name),
       product_type: xss(product.product_type),
-      mesh: xss(product.mesh),
-      hard_three_eighths: xss(product.hard_three_eighths),
-      hard_one_quarter: xss(product.hard_one_quarter),
-      soft_three_eighths: xss(product.soft_three_eighths),
-      prep_bend: xss(product.prep_bend),
-      prep_weld: xss(product.prep_weld),
-      weld: xss(product.weld)
+      mesh: product.mesh.map(m => xss(m)),
+      hard_three_eighths: product.hard_three_eighths.map(hte => xss(hte)),
+      hard_one_quarter: product.hard_one_quarter.map(hoq => xss(hoq)),
+      soft_three_eighths: product.soft_three_eighths.map(ste => xss(ste)),
+      prep_bend: product.prep_bend.map(pb => xss(pb)),
+      prep_weld: product.prep_weld.map(pw => xss(pw)),
+      weld: product.weld.map(w => xss(w))
     };
   }
 };

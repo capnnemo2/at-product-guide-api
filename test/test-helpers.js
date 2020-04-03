@@ -78,13 +78,55 @@ function makeExpectedProduct(product) {
     product_code: product.product_code,
     product_name: product.product_name,
     product_type: product.product_type,
-    mesh: product.mesh.join(","),
-    hard_three_eighths: product.hard_three_eighths.join(","),
-    hard_one_quarter: product.hard_one_quarter.join(","),
-    soft_three_eighths: product.soft_three_eighths.join(","),
-    prep_bend: product.prep_bend.join(","),
-    prep_weld: product.prep_weld.join(","),
-    weld: product.weld.join(",")
+    mesh: product.mesh,
+    hard_three_eighths: product.hard_three_eighths,
+    hard_one_quarter: product.hard_one_quarter,
+    soft_three_eighths: product.soft_three_eighths,
+    prep_bend: product.prep_bend,
+    prep_weld: product.prep_weld,
+    weld: product.weld
+  };
+}
+
+function makeMaliciousProduct() {
+  const maliciousProduct = {
+    id: 911,
+    product_code: '<script>alert("xss");</script>',
+    product_name: '<script>alert("xss");</script>',
+    product_type: '<script>alert("xss");</script>',
+    mesh: ['<script>alert("xss");</script>', '<script>alert("xss");</script>'],
+    hard_three_eighths: ['<script>alert("xss");</script>'],
+    hard_one_quarter: ['<script>alert("xss");</script>'],
+    soft_three_eighths: ['<script>alert("xss");</script>'],
+    prep_bend: ['<script>alert("xss");</script>'],
+    prep_weld: ['<script>alert("xss");</script>'],
+    weld: [
+      `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`
+    ]
+  };
+
+  const expectedProduct = {
+    id: 911,
+    product_code: '&lt;script&gt;alert("xss");&lt;/script&gt;',
+    product_name: '&lt;script&gt;alert("xss");&lt;/script&gt;',
+    product_type: '&lt;script&gt;alert("xss");&lt;/script&gt;',
+    mesh: [
+      '&lt;script&gt;alert("xss");&lt;/script&gt;',
+      '&lt;script&gt;alert("xss");&lt;/script&gt;'
+    ],
+    hard_three_eighths: ['&lt;script&gt;alert("xss");&lt;/script&gt;'],
+    hard_one_quarter: ['&lt;script&gt;alert("xss");&lt;/script&gt;'],
+    soft_three_eighths: ['&lt;script&gt;alert("xss");&lt;/script&gt;'],
+    prep_bend: ['&lt;script&gt;alert("xss");&lt;/script&gt;'],
+    prep_weld: ['&lt;script&gt;alert("xss");&lt;/script&gt;'],
+    weld: [
+      `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`
+    ]
+  };
+
+  return {
+    maliciousProduct,
+    expectedProduct
   };
 }
 
@@ -113,10 +155,17 @@ function seedProducts(db, products) {
     );
 }
 
+function seedMaliciousProduct(db, product) {
+  return db.insert([product]).into("products");
+}
+
 module.exports = {
   makeProductsArray,
   makeExpectedProduct,
+  makeMaliciousProduct,
   makeFixtures,
+
   cleanTables,
-  seedProducts
+  seedProducts,
+  seedMaliciousProduct
 };

@@ -44,5 +44,47 @@ describe("products endpoints", function() {
           .expect(200, expectedProducts);
       });
     });
+
+    context(`Given as XSS attack product`, () => {
+      const testProduct = helpers.makeProductsArray()[1];
+      const {
+        maliciousProduct,
+        expectedProduct
+      } = helpers.makeMaliciousProduct(testProduct);
+
+      beforeEach("insert malicious product", () => {
+        return helpers.seedMaliciousProduct(db, maliciousProduct);
+      });
+
+      it(`removes XSS attack content`, () => {
+        return supertest(app)
+          .get("/api/products")
+          .expect(200)
+          .expect(res => {
+            expect(res.body[0].product_code).to.eql(
+              expectedProduct.product_code
+            );
+            expect(res.body[0].product_name).to.eql(
+              expectedProduct.product_name
+            );
+            expect(res.body[0].product_type).to.eql(
+              expectedProduct.product_type
+            );
+            expect(res.body[0].mesh).to.eql(expectedProduct.mesh);
+            expect(res.body[0].hard_three_eighths).to.eql(
+              expectedProduct.hard_three_eighths
+            );
+            expect(res.body[0].hard_one_quarter).to.eql(
+              expectedProduct.hard_one_quarter
+            );
+            expect(res.body[0].soft_three_eighths).to.eql(
+              expectedProduct.soft_three_eighths
+            );
+            expect(res.body[0].prep_bend).to.eql(expectedProduct.prep_bend);
+            expect(res.body[0].prep_weld).to.eql(expectedProduct.prep_weld);
+            expect(res.body[0].weld).to.eql(expectedProduct.weld);
+          });
+      });
+    });
   });
 });
