@@ -37,7 +37,7 @@ describe("products endpoints", function() {
 
       it(`responds with 200 and all of the products`, () => {
         const expectedProducts = testProducts.map(product =>
-          helpers.makeExpectedProduct(testProducts)
+          helpers.makeExpectedProduct(product)
         );
         return supertest(app)
           .get("/api/products")
