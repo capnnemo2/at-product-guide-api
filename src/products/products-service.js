@@ -2,7 +2,13 @@ const xss = require("xss");
 
 const ProductsService = {
   getAllProducts(db) {
-    return db.from("products").select("*");
+    return db
+      .from("products")
+      .select(
+        "*",
+        db.raw(`json_build_array(mesh, hard_three_eighths, hard_one_quarter)`),
+        db.raw(`array_to_json(mesh)`)
+      );
   },
 
   getById(db, id) {
