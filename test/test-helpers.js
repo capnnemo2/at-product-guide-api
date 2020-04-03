@@ -96,7 +96,6 @@ function makeProductsArray() {
 // }
 
 function makeExpectedProduct(product) {
-  console.log(product);
   return {
     id: product.id,
     product_code: product.product_code,
