@@ -172,8 +172,9 @@ describe("products endpoints", function() {
 
     context(`Given there are comments for this product`, () => {
       beforeEach("insert products", () =>
-        helpers.seedProducts(db, testProducts)
+        helpers.seedProductsAndComments(db, testProducts, testComments)
       );
+      console.log(testComments);
 
       it(`responds with 200 and the specified comments`, () => {
         const productId = 1;
@@ -184,7 +185,8 @@ describe("products endpoints", function() {
 
         return supertest(app)
           .get(`/api/products/${productId}/comments`)
-          .expect(200, expectedComments);
+          .expect(200)
+          .expect(expectedComments);
       });
     });
   });

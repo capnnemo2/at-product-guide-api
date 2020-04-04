@@ -84,7 +84,7 @@ function makeCommentsArray(products) {
       id: 2,
       user_name: "Test user 2",
       content: "Test comment 2",
-      product_id: [products.length - 1].id
+      product_id: products[products.length - 1].id
     }
   ];
 }
@@ -188,6 +188,13 @@ function seedProducts(db, products) {
     );
 }
 
+function seedProductsAndComments(db, products, comments = []) {
+  return db
+    .into("products")
+    .insert(products)
+    .then(() => comments.length && db.into("comments").insert(comments));
+}
+
 function seedMaliciousProduct(db, product) {
   return db.insert([product]).into("products");
 }
@@ -202,5 +209,6 @@ module.exports = {
 
   cleanTables,
   seedProducts,
+  seedProductsAndComments,
   seedMaliciousProduct
 };

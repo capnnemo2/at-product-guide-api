@@ -14,7 +14,7 @@ const ProductsService = {
   getCommentsForProduct(db, product_id) {
     return db
       .from("comments AS comm")
-      .select("comm.id", "comm.user_name", "comm.content")
+      .select("comm.id", "comm.user_name", "comm.content", "comm.product_id")
       .where("comm.product_id", product_id);
   },
 
