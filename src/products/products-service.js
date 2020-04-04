@@ -5,19 +5,6 @@ const ProductsService = {
     return db.from("products").select("*");
   },
 
-  // getAllProducts(db) {
-  //   return db
-  //     .from("products")
-  //     .select(
-  //       "*",
-  //       // db.raw(`json_build_array(mesh, hard_three_eighths, hard_one_quarter)`),
-  //       db.raw(
-  //         `array_to_json(array_agg(json_build_array(mesh, hard_three_eighths, hard_one_quarter, soft_three_eighths, prep_bend, prep_weld, weld)))`
-  //       )
-  //     )
-  //     .groupBy("id");
-  // },
-
   getById(db, id) {
     return ProductsService.getAllProducts(db)
       .where("id", id)
@@ -47,23 +34,6 @@ const ProductsService = {
   updateProduct(db, id, newProductFields) {
     return db.where({ id }).update(newProductFields);
   },
-
-  //   serializeProduct(product) {
-  //     return {
-  //       id: product.id,
-  //       product_code: xss(product.product_code),
-  //       product_name: xss(product.product_name),
-  //       product_type: xss(product.product_type),
-  //       mesh: xss(product.mesh),
-  //       hard_three_eighths: xss(product.hard_three_eighths),
-  //       hard_one_quarter: xss(product.hard_one_quarter),
-  //       soft_three_eighths: xss(product.soft_three_eighths),
-  //       prep_bend: xss(product.prep_bend),
-  //       prep_weld: xss(product.prep_weld),
-  //       weld: xss(product.weld)
-  //     };
-  //   }
-  // };
 
   serializeProduct(product) {
     console.log(product.mesh ? product.mesh : []);
