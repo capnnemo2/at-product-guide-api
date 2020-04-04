@@ -14,7 +14,7 @@ const ProductsService = {
   getCommentsForProduct(db, product_id) {
     return db
       .from("comments AS comm")
-      .SELECT("comm.id", "comm.user_name", "comm.content")
+      .select("comm.id", "comm.user_name", "comm.content")
       .where("comm.product_id", product_id);
   },
 
@@ -55,6 +55,19 @@ const ProductsService = {
       prep_bend: product.prep_bend ? product.prep_bend.map(pb => xss(pb)) : [],
       prep_weld: product.prep_weld ? product.prep_weld.map(pw => xss(pw)) : [],
       weld: product.weld ? product.weld.map(w => xss(w)) : []
+    };
+  },
+
+  serializeProductComments(comments) {
+    return comments.map(this.serializeProductComment);
+  },
+
+  serializeProductComment(comment) {
+    return {
+      id: comment.id,
+      user_name: xss(comment.user_name),
+      content: xss(comment.content),
+      product_id: comment.product_id
     };
   }
 };

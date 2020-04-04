@@ -18,6 +18,20 @@ productsRouter
     res.json(ProductsService.serializeProduct(res.product));
   });
 
+productsRouter
+  .route("/:product_id/comments")
+  .all(checkProductExists)
+  .get((req, res, next) => {
+    ProductsService.getCommentsForProduct(
+      req.app.get("db"),
+      req.params.product_id
+    )
+      .then(comments => {
+        res.json(ProductsService.serializeProductComments(comments));
+      })
+      .catch(next);
+  });
+
 async function checkProductExists(req, res, next) {
   try {
     const product = await ProductsService.getById(
