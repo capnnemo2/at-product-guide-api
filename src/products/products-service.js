@@ -36,7 +36,6 @@ const ProductsService = {
   },
 
   serializeProduct(product) {
-    console.log(product.mesh ? product.mesh : []);
     return {
       id: product.id,
       product_code: xss(product.product_code),

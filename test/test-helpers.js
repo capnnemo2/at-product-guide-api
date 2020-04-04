@@ -72,6 +72,23 @@ function makeProductsArray() {
   ];
 }
 
+function makeCommentsArray(products) {
+  return [
+    {
+      id: 1,
+      user_name: "Test user 1",
+      content: "Test comment 1",
+      product_id: products[0].id
+    },
+    {
+      id: 2,
+      user_name: "Test user 2",
+      content: "Test comment 2",
+      product_id: [products.length - 1].id
+    }
+  ];
+}
+
 function makeExpectedProduct(product) {
   return {
     id: product.id,
@@ -86,6 +103,21 @@ function makeExpectedProduct(product) {
     prep_weld: product.prep_weld,
     weld: product.weld
   };
+}
+
+function makeExpectedProductComments(productId, comments) {
+  const expectedComments = comments.filter(
+    comment => comment.product_id === productId
+  );
+
+  return expectedComments.map(c => {
+    return {
+      id: c.id,
+      user_name: c.user_name,
+      content: c.content,
+      product_id: c.product_id
+    };
+  });
 }
 
 function makeMaliciousProduct() {
@@ -132,7 +164,8 @@ function makeMaliciousProduct() {
 
 function makeFixtures() {
   const testProducts = makeProductsArray();
-  return { testProducts };
+  const testComments = makeCommentsArray(testProducts);
+  return { testProducts, testComments };
 }
 
 function cleanTables(db) {
@@ -161,7 +194,9 @@ function seedMaliciousProduct(db, product) {
 
 module.exports = {
   makeProductsArray,
+  makeCommentsArray,
   makeExpectedProduct,
+  makeExpectedProductComments,
   makeMaliciousProduct,
   makeFixtures,
 
