@@ -9,7 +9,7 @@ productsRouter
   .route("/")
   .get((req, res, next) => {
     ProductsService.getAllProducts(req.app.get("db"))
-      .then(products => {
+      .then((products) => {
         res.json(products.map(ProductsService.serializeProduct));
       })
       .catch(next);
@@ -25,7 +25,7 @@ productsRouter
       soft_three_eighths,
       prep_bend,
       prep_weld,
-      weld
+      weld,
     } = req.body;
     const newProduct = { product_code, product_name, product_type };
 
@@ -46,7 +46,7 @@ productsRouter
     newProduct.weld = weld;
 
     ProductsService.insertProduct(req.app.get("db"), newProduct)
-      .then(product => {
+      .then((product) => {
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${product.id}`))
@@ -78,8 +78,8 @@ productsRouter
     if (numberOfValues === 0) {
       return res.status(400).json({
         error: {
-          message: `Request body must contain either 'product code', 'product name', or 'product type'`
-        }
+          message: `Request body must contain either 'product code', 'product name', or 'product type'`,
+        },
       });
     }
 
@@ -88,7 +88,7 @@ productsRouter
       req.params.product_id,
       productToUpdate
     )
-      .then(numRowsAffected => {
+      .then((numRowsAffected) => {
         res.status(204).end();
       })
       .catch(next);
@@ -102,7 +102,7 @@ productsRouter
       req.app.get("db"),
       req.params.product_id
     )
-      .then(comments => {
+      .then((comments) => {
         res.json(ProductsService.serializeProductComments(comments));
       })
       .catch(next);

@@ -172,7 +172,6 @@ describe("products endpoints", function () {
       beforeEach("insert products", () =>
         helpers.seedProductsAndComments(db, testProducts, testComments)
       );
-      console.log(testComments);
 
       it(`responds with 200 and the specified comments`, () => {
         const productId = 1;
