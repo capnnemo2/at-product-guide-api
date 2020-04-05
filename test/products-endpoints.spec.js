@@ -2,7 +2,7 @@ const knex = require("knex");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe("products endpoints", function() {
+describe("products endpoints", function () {
   let db;
 
   const { testProducts, testComments } = helpers.makeFixtures();
@@ -10,7 +10,7 @@ describe("products endpoints", function() {
   before("make knex instance", () => {
     db = knex({
       client: "pg",
-      connection: process.env.TEST_DB_URL
+      connection: process.env.TEST_DB_URL,
     });
     app.set("db", db);
   });
@@ -24,9 +24,7 @@ describe("products endpoints", function() {
   describe(`GET /api/products`, () => {
     context(`Given no products`, () => {
       it(`responds with 200 and an empty list`, () => {
-        return supertest(app)
-          .get("/api/products")
-          .expect(200, []);
+        return supertest(app).get("/api/products").expect(200, []);
       });
     });
 
@@ -36,7 +34,7 @@ describe("products endpoints", function() {
       );
 
       it(`responds with 200 and all of the products`, () => {
-        const expectedProducts = testProducts.map(product =>
+        const expectedProducts = testProducts.map((product) =>
           helpers.makeExpectedProduct(product)
         );
         return supertest(app)
@@ -49,7 +47,7 @@ describe("products endpoints", function() {
       const testProduct = helpers.makeProductsArray()[1];
       const {
         maliciousProduct,
-        expectedProduct
+        expectedProduct,
       } = helpers.makeMaliciousProduct(testProduct);
 
       beforeEach("insert malicious product", () => {
@@ -60,7 +58,7 @@ describe("products endpoints", function() {
         return supertest(app)
           .get("/api/products")
           .expect(200)
-          .expect(res => {
+          .expect((res) => {
             expect(res.body[0].product_code).to.eql(
               expectedProduct.product_code
             );
@@ -121,7 +119,7 @@ describe("products endpoints", function() {
       const testProduct = helpers.makeProductsArray()[1];
       const {
         maliciousProduct,
-        expectedProduct
+        expectedProduct,
       } = helpers.makeMaliciousProduct(testProduct);
 
       beforeEach("insert malicious product", () => {
@@ -132,7 +130,7 @@ describe("products endpoints", function() {
         return supertest(app)
           .get(`/api/products/${maliciousProduct.id}`)
           .expect(200)
-          .expect(res => {
+          .expect((res) => {
             expect(res.body.product_code).to.eql(expectedProduct.product_code);
             expect(res.body.product_name).to.eql(expectedProduct.product_name);
             expect(res.body.product_type).to.eql(expectedProduct.product_type);
@@ -154,7 +152,7 @@ describe("products endpoints", function() {
     });
   });
 
-  describe.only(`GET /api/products/:product_id/comments`, () => {
+  describe(`GET /api/products/:product_id/comments`, () => {
     context(`Given no products`, () => {
       beforeEach(() => helpers.seedProducts(db, testProducts));
 
