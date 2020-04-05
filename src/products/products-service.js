@@ -34,7 +34,9 @@ const ProductsService = {
   },
 
   updateProduct(db, id, newProductFields) {
-    return db.where({ id }).update(newProductFields);
+    return ProductsService.getAllProducts(db)
+      .where({ id })
+      .update(newProductFields);
   },
 
   serializeProduct(product) {
