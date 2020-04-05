@@ -60,6 +60,38 @@ productsRouter
   .all(checkProductExists)
   .get((req, res) => {
     res.json(ProductsService.serializeProduct(res.product));
+  })
+  .delete((req, res, next) => {
+    ProductsService.deleteProduct(req.app.get("db"), req.params.product_id)
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
+  })
+  .patch(jsonParser, (req, res, next) => {
+    const { product_code, product_name, product_type } = req.body;
+    const productToUpdate = { product_code, product_name, product_type };
+
+    const numberOfValues = Object.values(productToUpdate).filter(Boolean)
+      .length;
+
+    if (numberOfValues === 0) {
+      return res.status(400).json({
+        error: {
+          message: `Request body must contain either 'product code', 'product name', or 'product type'`
+        }
+      });
+    }
+
+    ProductsService.updateProduct(
+      req.app.get("db"),
+      req.params.product_id,
+      productToUpdate
+    )
+      .then(numRowsAffected => {
+        res.status(204).end();
+      })
+      .catch(next);
   });
 
 productsRouter

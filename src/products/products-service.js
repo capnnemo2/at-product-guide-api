@@ -28,7 +28,9 @@ const ProductsService = {
   },
 
   deleteProduct(db, id) {
-    return db.where({ id }).delete();
+    return ProductsService.getAllProducts(db)
+      .where({ id })
+      .delete();
   },
 
   updateProduct(db, id, newProductFields) {
