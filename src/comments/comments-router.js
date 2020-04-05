@@ -28,9 +28,59 @@ commentsRouter
       .then((comment) => {
         res
           .status(201)
-          // not sure about this location because you can only view comments on the productDetails page...
           .location(path.posix.join(req.originalUrl, `/${comment.id}`))
           .json(CommentsService.serializeComment(comment));
+      })
+      .catch(next);
+  });
+
+commentsRouter
+  .route("/:comment_id")
+  .all((req, res, next) => {
+    CommentsService.getById(req.app.get("db"), req.params.comment_id)
+      .then((comment) => {
+        if (!comment) {
+          return res
+            .status(404)
+            .json({ error: { message: `Comment doesn't exist` } });
+        }
+
+        res.comment = comment;
+        next();
+      })
+      .catch(next);
+  })
+  .get((req, res, next) => {
+    res.json(serializeComment(res.comment));
+  })
+  .delete((req, res, next) => {
+    CommentsService.deleteComment(req.app.get("db"), req.params.comment_id)
+      .then((numRowsAffected) => {
+        res.status(204).end();
+      })
+      .catch(next);
+  })
+  .patch(jsonParser, (req, res, next) => {
+    const { user_name, content } = req.body;
+    const commentToUpdate = { user_name, content };
+
+    const numberOfValues = Object.values(commentToUpdate).filter(Boolean)
+      .length;
+
+    if (numberOfValues === 0)
+      return res.status(400).json({
+        error: {
+          message: `Request body must contain either 'user_name' or 'content'`,
+        },
+      });
+
+    CommentsService.updateComment(
+      req.app.get("db"),
+      req.params.comment_id,
+      commentToUpdate
+    )
+      .then((numRowsAffected) => {
+        res.status(204).end();
       })
       .catch(next);
   });

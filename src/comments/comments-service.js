@@ -18,12 +18,14 @@ const CommentsService = {
       .then((comment) => CommentsService.getById(db, comment.id));
   },
 
-  deleteComment(db) {
-    return CommentsService.getById(db).delete();
+  deleteComment(db, id) {
+    return CommentsService.getAllComments(db).where({ id }).delete();
   },
 
-  updateComment(db, newCommentFields) {
-    return CommentsService.getById(db).update(newCommentFields);
+  updateComment(db, id, newCommentFields) {
+    return CommentsService.getAllComments(db)
+      .where({ id })
+      .update(newCommentFields);
   },
 
   serializeComment(comment) {
