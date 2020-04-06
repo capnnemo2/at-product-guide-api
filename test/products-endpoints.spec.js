@@ -44,11 +44,10 @@ describe("products endpoints", function () {
     });
 
     context(`Given as XSS attack product`, () => {
-      const testProduct = helpers.makeProductsArray()[1];
       const {
         maliciousProduct,
         expectedProduct,
-      } = helpers.makeMaliciousProduct(testProduct);
+      } = helpers.makeMaliciousProduct();
 
       beforeEach("insert malicious product", () => {
         return helpers.seedMaliciousProduct(db, maliciousProduct);

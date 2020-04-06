@@ -171,6 +171,27 @@ function makeMaliciousProduct() {
   };
 }
 
+function makeMaliciousComment(products) {
+  const maliciousComment = {
+    id: 911,
+    user_name: '<script>alert("xss");</script>',
+    content: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
+    product_id: products[1].id,
+  };
+
+  const expectedComment = {
+    id: 911,
+    user_name: '&lt;script&gt;alert("xss");&lt;/script&gt;',
+    content: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+    product_id: products[1].id,
+  };
+
+  return {
+    maliciousComment,
+    expectedComment,
+  };
+}
+
 function makeFixtures() {
   const testProducts = makeProductsArray();
   const testComments = makeCommentsArray(testProducts);
@@ -197,8 +218,10 @@ function seedProducts(db, products) {
     );
 }
 
-function seedComments(db, comments) {
-  return db.into("comments").insert(comments);
+function seedComments(db, products, comments = []) {
+  return seedProducts(db, products).then(
+    () => comments.length && db.into("comments").insert(comments)
+  );
 }
 
 function seedProductsAndComments(db, products, comments = []) {
@@ -209,7 +232,19 @@ function seedProductsAndComments(db, products, comments = []) {
 }
 
 function seedMaliciousProduct(db, product) {
-  return db.insert([product]).into("products");
+  return db.into("products").insert([product]);
+}
+
+function seedMaliciousComment(db, products, comment) {
+  return db
+    .into("products")
+    .insert(products)
+    .then(() =>
+      db.raw(`SELECT setval('products_id_seq', ?)`, [
+        products[products.length - 1].id,
+      ])
+    )
+    .then(() => db.into("comments").insert([comment]));
 }
 
 module.exports = {
@@ -219,6 +254,7 @@ module.exports = {
   makeExpectedProductComments,
   makeExpectedComment,
   makeMaliciousProduct,
+  makeMaliciousComment,
   makeFixtures,
 
   cleanTables,
@@ -226,4 +262,5 @@ module.exports = {
   seedComments,
   seedProductsAndComments,
   seedMaliciousProduct,
+  seedMaliciousComment,
 };
