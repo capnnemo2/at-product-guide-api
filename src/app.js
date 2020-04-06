@@ -31,7 +31,9 @@ app.use("/api/products", productsRouter);
 app.use("/api/comments", commentsRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hello, world");
+  res
+    .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+    .send("Hello, world");
 });
 
 app.use(function errorHandler(error, req, res, next) {
