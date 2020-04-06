@@ -21,7 +21,7 @@ describe("comments endpoints", function () {
 
   afterEach("cleanup", () => helpers.cleanTables(db));
 
-  describe(`GET /api/comments`, () => {
+  describe.only(`GET /api/comments`, () => {
     context(`Given no comments`, () => {
       it(`responds with 200 and an empty list`, () => {
         return supertest(app).get("/api/comments").expect(200, []);

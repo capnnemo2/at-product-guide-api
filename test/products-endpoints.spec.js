@@ -93,7 +93,7 @@ describe("products endpoints", function () {
         const productId = 1234567;
         return supertest(app)
           .get(`/api/products/${productId}`)
-          .expect(404, { error: `Product doesn't exist` });
+          .expect(404, { error: { message: `Product doesn't exist` } });
       });
     });
 
@@ -159,7 +159,7 @@ describe("products endpoints", function () {
         const productId = 1234567;
         return supertest(app)
           .get(`/api/products/${productId}/comments`)
-          .expect(404, { error: `Product doesn't exist` });
+          .expect(404, { error: { message: `Product doesn't exist` } });
       });
     });
 
@@ -309,7 +309,7 @@ describe("products endpoints", function () {
     });
   });
 
-  describe.only(`PATCH /api/products/:product_id`, () => {
+  describe(`PATCH /api/products/:product_id`, () => {
     context(`Given no products`, () => {
       it(`responds with 404`, () => {
         const productId = 1234567;
