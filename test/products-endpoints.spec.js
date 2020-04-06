@@ -187,7 +187,7 @@ describe("products endpoints", function () {
     });
   });
 
-  describe.only(`POST /api/products`, () => {
+  describe(`POST /api/products`, () => {
     const requiredFields = ["product_code", "product_name", "product_type"];
     requiredFields.forEach((field) => {
       const newProduct = {
@@ -273,6 +273,39 @@ describe("products endpoints", function () {
           expect(res.body.prep_weld).to.eql(expectedProduct.prep_weld);
           expect(res.body.weld).to.eql(expectedProduct.weld);
         });
+    });
+  });
+
+  describe.only(`DELETE /api/products/:product_id`, () => {
+    context(`Given there are no products in the database`, () => {
+      it(`responds with 404`, () => {
+        const productId = 1234567;
+        return supertest(app)
+          .delete(`/api/products/${productId}`)
+          .expect(404, { error: { message: `Product doesn't exist` } });
+      });
+    });
+
+    context(`Given there are products in the database`, () => {
+      const testProducts = helpers.makeProductsArray();
+
+      beforeEach("insert products", () => {
+        return helpers.seedProducts(db, testProducts);
+      });
+
+      it(`responds with 204 and removes the product`, () => {
+        const idToRemove = 2;
+        const expectedProducts = testProducts.filter(
+          (p) => p.id !== idToRemove
+        );
+
+        return supertest(app)
+          .delete(`/api/products/${idToRemove}`)
+          .expect(204)
+          .then((res) =>
+            supertest(app).get(`/api/products`).expect(expectedProducts)
+          );
+      });
     });
   });
 });

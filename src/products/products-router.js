@@ -116,7 +116,9 @@ async function checkProductExists(req, res, next) {
     );
 
     if (!product)
-      return res.status(404).json({ error: `Product doesn't exist` });
+      return res
+        .status(404)
+        .json({ error: { message: `Product doesn't exist` } });
 
     res.product = product;
     next();
