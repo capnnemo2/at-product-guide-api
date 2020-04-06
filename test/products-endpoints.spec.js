@@ -276,7 +276,7 @@ describe("products endpoints", function () {
     });
   });
 
-  describe.only(`DELETE /api/products/:product_id`, () => {
+  describe(`DELETE /api/products/:product_id`, () => {
     context(`Given there are no products in the database`, () => {
       it(`responds with 404`, () => {
         const productId = 1234567;
@@ -305,6 +305,67 @@ describe("products endpoints", function () {
           .then((res) =>
             supertest(app).get(`/api/products`).expect(expectedProducts)
           );
+      });
+    });
+  });
+
+  describe.only(`PATCH /api/products/:product_id`, () => {
+    context(`Given no products`, () => {
+      it(`responds with 404`, () => {
+        const productId = 1234567;
+        return supertest(app)
+          .patch(`/api/products/${productId}`)
+          .expect(404, { error: { message: `Product doesn't exist` } });
+      });
+    });
+
+    context(`Given there are products in the database`, () => {
+      const testProducts = helpers.makeProductsArray();
+
+      beforeEach("insert products", () => {
+        return helpers.seedProducts(db, testProducts);
+      });
+
+      it(`responds with 204 and updates the product`, () => {
+        const idToUpdate = 2;
+        const updatedProduct = {
+          product_code: "updated product code",
+          product_name: "updated product name",
+          product_type: "updated product type",
+          mesh: ["updated mesh"],
+          hard_three_eighths: ['updated hard 3/8"'],
+          hard_one_quarter: ['updated hard 1/4"'],
+          soft_three_eighths: ['updated soft 3/8"'],
+          prep_bend: ["updated prep bend"],
+          prep_weld: ["updated prep weld"],
+          weld: ["updated weld"],
+        };
+        const expectedProduct = {
+          ...testProducts[idToUpdate - 1],
+          ...updatedProduct,
+        };
+
+        return supertest(app)
+          .patch(`/api/products/${idToUpdate}`)
+          .send(updatedProduct)
+          .expect(204)
+          .then((res) =>
+            supertest(app)
+              .get(`/api/products/${idToUpdate}`)
+              .expect(expectedProduct)
+          );
+      });
+
+      it(`responds with 400 when required fields are not supplied`, () => {
+        const idToUpdate = 2;
+        return supertest(app)
+          .patch(`/api/products/${idToUpdate}`)
+          .send({ irrelevantField: "foo" })
+          .expect(400, {
+            error: {
+              message: `Request body must contain 'product code', 'product name', and 'product type'`,
+            },
+          });
       });
     });
   });

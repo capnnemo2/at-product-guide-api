@@ -69,16 +69,38 @@ productsRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { product_code, product_name, product_type } = req.body;
-    const productToUpdate = { product_code, product_name, product_type };
+    const {
+      product_code,
+      product_name,
+      product_type,
+      mesh,
+      hard_three_eighths,
+      hard_one_quarter,
+      soft_three_eighths,
+      prep_bend,
+      prep_weld,
+      weld,
+    } = req.body;
+    const productToUpdate = {
+      product_code,
+      product_name,
+      product_type,
+      mesh,
+      hard_three_eighths,
+      hard_one_quarter,
+      soft_three_eighths,
+      prep_bend,
+      prep_weld,
+      weld,
+    };
 
     const numberOfValues = Object.values(productToUpdate).filter(Boolean)
       .length;
 
-    if (numberOfValues === 0) {
+    if (numberOfValues < 3) {
       return res.status(400).json({
         error: {
-          message: `Request body must contain either 'product code', 'product name', or 'product type'`,
+          message: `Request body must contain 'product code', 'product name', and 'product type'`,
         },
       });
     }
