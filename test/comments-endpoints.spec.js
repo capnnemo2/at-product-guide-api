@@ -21,7 +21,7 @@ describe("comments endpoints", function () {
 
   afterEach("cleanup", () => helpers.cleanTables(db));
 
-  describe.only(`GET /api/comments`, () => {
+  describe(`GET /api/comments`, () => {
     context(`Given no comments`, () => {
       it(`responds with 200 and an empty list`, () => {
         return supertest(app).get("/api/comments").expect(200, []);
@@ -52,9 +52,6 @@ describe("comments endpoints", function () {
       beforeEach("insert malicious comment", () => {
         return helpers.seedMaliciousComment(db, testProducts, maliciousComment);
       });
-
-      console.log("mal", maliciousComment);
-      console.log("expect", expectedComment);
 
       it(`removes XSS attack content`, () => {
         return supertest(app)

@@ -186,4 +186,93 @@ describe("products endpoints", function () {
       });
     });
   });
+
+  describe.only(`POST /api/products`, () => {
+    const requiredFields = ["product_code", "product_name", "product_type"];
+    requiredFields.forEach((field) => {
+      const newProduct = {
+        product_code: "Test product code",
+        product_name: "Test product name",
+        product_type: "Test product type",
+      };
+      it(`responds with 400 and an error when the ${field} is missing`, () => {
+        delete newProduct[field];
+        return supertest(app)
+          .post("/api/products")
+          .send(newProduct)
+          .expect(400, {
+            error: { message: `Missing '${field}' in request body` },
+          });
+      });
+    });
+
+    it(`creates a product, responding with 201 and the new product`, () => {
+      const newProduct = {
+        product_code: "Test product code",
+        product_name: "Test product name",
+        product_type: "Test product type",
+        mesh: ["test mesh 1", "test mesh 2"],
+        hard_three_eighths: ['test hard 3/8"'],
+        hard_one_quarter: ['test hard 1/4"'],
+        soft_three_eighths: ['test soft 3/8"'],
+        prep_bend: ["test prep bend"],
+        prep_weld: ["test prep weld"],
+        weld: ["test weld"],
+      };
+      return supertest(app)
+        .post("/api/products")
+        .send(newProduct)
+        .expect(201)
+        .expect((res) => {
+          expect(res.body.product_code).to.eql(newProduct.product_code);
+          expect(res.body.product_name).to.eql(newProduct.product_name);
+          expect(res.body.product_type).to.eql(newProduct.product_type);
+          expect(res.body.mesh).to.eql(newProduct.mesh);
+          expect(res.body.hard_three_eighths).to.eql(
+            newProduct.hard_three_eighths
+          );
+          expect(res.body.hard_one_quarter).to.eql(newProduct.hard_one_quarter);
+          expect(res.body.soft_three_eighths).to.eql(
+            newProduct.soft_three_eighths
+          );
+          expect(res.body.prep_bend).to.eql(newProduct.prep_bend);
+          expect(res.body.prep_weld).to.eql(newProduct.prep_weld);
+          expect(res.body.weld).to.eql(newProduct.weld);
+        })
+        .then((postRes) =>
+          supertest(app)
+            .get(`/api/products/${postRes.body.id}`)
+            .expect(postRes.body)
+        );
+    });
+
+    it(`removes XSS attack content from response`, () => {
+      const {
+        maliciousProduct,
+        expectedProduct,
+      } = helpers.makeMaliciousProduct();
+      return supertest(app)
+        .post(`/api/products`)
+        .send(maliciousProduct)
+        .expect(201)
+        .expect((res) => {
+          expect(res.body.product_code).to.eql(expectedProduct.product_code);
+          expect(res.body.product_name).to.eql(expectedProduct.product_name);
+          expect(res.body.product_type).to.eql(expectedProduct.product_type);
+          expect(res.body.mesh).to.eql(expectedProduct.mesh);
+          expect(res.body.hard_three_eighths).to.eql(
+            expectedProduct.hard_three_eighths
+          );
+          expect(res.body.hard_one_quarter).to.eql(
+            expectedProduct.hard_one_quarter
+          );
+          expect(res.body.soft_three_eighths).to.eql(
+            expectedProduct.soft_three_eighths
+          );
+          expect(res.body.prep_bend).to.eql(expectedProduct.prep_bend);
+          expect(res.body.prep_weld).to.eql(expectedProduct.prep_weld);
+          expect(res.body.weld).to.eql(expectedProduct.weld);
+        });
+    });
+  });
 });
