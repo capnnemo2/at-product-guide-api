@@ -11,6 +11,8 @@ commentsRouter
     CommentsService.getAllComments(req.app.get("db"))
       .then((comments) => {
         res.json(comments.map(CommentsService.serializeComment));
+        console.dir(comments);
+        console.log(comments);
       })
       .catch(next);
   })
