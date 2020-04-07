@@ -21,7 +21,7 @@ commentsRouter
     for (const [key, value] of Object.entries(newComment))
       if (value == null)
         return res.status(400).json({
-          error: `Missing '${key}' in request body`,
+          error: { message: `Missing '${key}' in request body` },
         });
 
     CommentsService.insertComment(req.app.get("db"), newComment)
@@ -51,7 +51,7 @@ commentsRouter
       .catch(next);
   })
   .get((req, res, next) => {
-    res.json(serializeComment(res.comment));
+    res.json(CommentsService.serializeComment(res.comment));
   })
   .delete((req, res, next) => {
     CommentsService.deleteComment(req.app.get("db"), req.params.comment_id)
