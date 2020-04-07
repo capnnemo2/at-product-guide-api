@@ -22,7 +22,7 @@ describe("comments endpoints", function () {
 
   afterEach("cleanup", () => helpers.cleanTables(db));
 
-  describe(`GET /api/comments`, () => {
+  describe.only(`GET /api/comments`, () => {
     context(`Given no comments`, () => {
       it(`responds with 200 and an empty list`, () => {
         return supertest(app)
@@ -34,7 +34,7 @@ describe("comments endpoints", function () {
 
     context(`Given there are comments in the database`, () => {
       beforeEach("insert comments", () => {
-        helpers.seedProductsAndComments(db, testProducts, testComments);
+        return helpers.seedProductsAndComments(db, testProducts, testComments);
       });
 
       it(`responds with 200 and all of the comments`, () => {
@@ -64,9 +64,9 @@ describe("comments endpoints", function () {
           .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
           .expect(200)
           .expect((res) => {
-            expect(res.body.user_name).to.eql(expectedComment.user_name);
-            expect(res.body.content).to.eql(expectedComment.content);
-            expect(res.body.product_id).to.eql(expectedComment.product_id);
+            expect(res.body[0].user_name).to.eql(expectedComment.user_name);
+            expect(res.body[0].content).to.eql(expectedComment.content);
+            expect(res.body[0].product_id).to.eql(expectedComment.product_id);
           });
       });
     });
