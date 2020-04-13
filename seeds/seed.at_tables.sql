@@ -20,7 +20,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             4 x 11 1/4\"
         }',
         '{
-            1 x 20'', bend @ 67\", cut @ 134\"
+            "1 x 20'', bend @ 67\", cut @ 134\""
         }',
         '{
             Use the ST jig on the metal wheely table. Bend to 5-7\" from jig.
