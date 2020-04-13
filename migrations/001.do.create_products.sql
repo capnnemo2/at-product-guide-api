@@ -9,5 +9,7 @@ CREATE TABLE products (
     soft_three_eighths TEXT [],
     prep_bend TEXT [],
     prep_weld TEXT [],
-    weld TEXT []
+    weld TEXT [],
+    img_src TEXT,
+    img_alt TEXT
 );
