@@ -235,7 +235,9 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Weld your quarter inch steel: center first, centering the left and right pieces.",
             "Cut excess quarter inch and weld.",
             "Back weld."
-        }'
+        }',
+        'img_src',
+        'corner trellis'
     ),
     (
         'CT71',
@@ -259,7 +261,9 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Weld the partial FT71 to the hanging one so that they create a 90 degree angle.",
             "Add the second bottom crosspiece.",
             "Back weld."
-        }'
+        }',
+        'img_src',
+        'ct71'
     ),
     (
         'SA',
@@ -389,7 +393,9 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Flip the ball over so that the flat side of your MG faces up.",
             "Weld on the remaining 3 x 14\” diameter MG pieces exactly as you did the first side.",
             "Backweld."
-        }'
+        }',
+        'img_src',
+        'small ball'
     ),
     (
         'LB',
@@ -446,7 +452,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             "4 x 8\" (foot spikes)",
             "8 x 18\" diameter pieces (LG)",
-            "8 x 14" diameter pieces (MG)"
+            "8 x 14\" diameter pieces (MG)"
         }',
         null,
         '{
@@ -540,7 +546,9 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Flip the ball over so that the flat side of your LG and MG face up.",
             "Weld on the remaining 3 x 18\” diameter LG pieces, 3 x 14\” diameter MG pieces, and 3 x 10\” diameter SG pieces exactly as you did the first side.",
             "Back weld."
-        }'
+        }',
+        'img_src',
+        'triple ball'
 
     );
 
