@@ -7,6 +7,14 @@ const { NODE_ENV } = require("./config");
 const productsRouter = require("./products/products-router");
 const commentsRouter = require("./comments/comments-router");
 
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: "at-product-guide",
+  api_key: "236767549636484",
+  api_secret: "K2JlvkVrr7H5e531m1XMOV1oC3Y",
+});
+
 const app = express();
 
 app.use(
