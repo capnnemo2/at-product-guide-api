@@ -29,7 +29,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             First weld: 12\" from top.
         }',
-        'img_src',
+        'trellises/small_trellis.jpg',
         'small trellis'
 
     ),
@@ -56,7 +56,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             First weld: one foot spike length up from the bottom, weld mesh to 3/8\".
         }',
-        'img_src',
+        'trellises/medium_trellis.jpg',
         'medium trellis'
     ),
     (
@@ -82,7 +82,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             First weld: one foot spike length up from the bottom, weld mesh to 3/8\".
         }',
-        'img_src',
+        'trellises/large_trellis.jpg',
         'large trellis'
     ),
     (
@@ -110,7 +110,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             First weld: one foot spike length up from the bottom, weld mesh to 3/8\". 
         }',
-        'img_src',
+        'trellises/extra_large_trellis.jpg',
         'extra large trellis'
     ),
     (
@@ -137,7 +137,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Add bottom crosspiece.",
             "Back weld 3/8\""
         }',
-        'img_src',
+        'trellises/ft51.jpg',
         'ft51'
     ),
     (
@@ -158,7 +158,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             "Standard trellis welding. See FT51 for guidance"
         }',
-        'img_src',
+        'trellises/ft52.jpg',
         'ft52'
     ),
     (
@@ -179,7 +179,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             "Standard trellis welding. See FT51 for guidance"
         }',
-        'img_src',
+        'trellises/ft53.jpg',
         'ft53'
     ),
     (
@@ -200,7 +200,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             "Standard trellis welding. See FT51 for guidance"
         }',
-        'img_src',
+        'trellises/ft54.jpg',
         'ft54'
     ),
     (
@@ -236,7 +236,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Cut excess quarter inch and weld.",
             "Back weld."
         }',
-        'img_src',
+        'trellises/corner_trellis.jpg',
         'corner trellis'
     ),
     (
@@ -262,7 +262,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Add the second bottom crosspiece.",
             "Back weld."
         }',
-        'img_src',
+        'trellises/ct71.jpg',
         'ct71'
     ),
     (
@@ -285,7 +285,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             First weld: 13 1/2\".
         }',
-        'img_src',
+        'arbors/small_arbor.jpg',
         'small arbor'
     ),
     (
@@ -308,7 +308,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             First weld: 14 1/2\".
         }',
-        'img_src',
+        'arbors/medium_arbor.jpg',
         'medium arbor'
     ),
     (
@@ -331,7 +331,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             First weld: 16\"
         }',
-        'img_src',
+        'arbors/large_arbor.jpg',
         'large arbor'
     ),
     (
@@ -354,7 +354,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
         '{
             First weld: 16\"
         }',
-        'img_src',
+        'arbors/extra_large_arbor.jpg',
         'extra large arbor'
     ),
     (
@@ -394,7 +394,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Weld on the remaining 3 x 14\” diameter MG pieces exactly as you did the first side.",
             "Backweld."
         }',
-        'img_src',
+        'topiary/small_ball.jpg',
         'small ball'
     ),
     (
@@ -435,7 +435,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Weld on the remaining 3 x 18\” diameter LG pieces exactly as you did the first side.",
             "Back weld."
         }',
-        'img_src',
+        'topiary/large_ball.jpg',
         'large ball'
     ),
     (
@@ -488,7 +488,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Weld on the remaining 3 x 18\” diameter LG pieces and 3 x 14\” diameter MG pieces exactly as you did the first side.",
             "Back weld."
         }',
-        'img_src',
+        'topiary/double_ball.jpg',
         'double ball'
     ),
     (
@@ -547,7 +547,7 @@ INSERT INTO products (product_code, product_name, product_type, mesh, hard_three
             "Weld on the remaining 3 x 18\” diameter LG pieces, 3 x 14\” diameter MG pieces, and 3 x 10\” diameter SG pieces exactly as you did the first side.",
             "Back weld."
         }',
-        'img_src',
+        'topiary/triple_ball.jpg',
         'triple ball'
 
     );

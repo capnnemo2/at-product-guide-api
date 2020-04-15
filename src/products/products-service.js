@@ -6,9 +6,7 @@ const ProductsService = {
   },
 
   getById(db, id) {
-    return ProductsService.getAllProducts(db)
-      .where("id", id)
-      .first();
+    return ProductsService.getAllProducts(db).where("id", id).first();
   },
 
   getCommentsForProduct(db, product_id) {
@@ -24,13 +22,11 @@ const ProductsService = {
       .into("products")
       .returning("*")
       .then(([product]) => product)
-      .then(product => ProductsService.getById(db, product.id));
+      .then((product) => ProductsService.getById(db, product.id));
   },
 
   deleteProduct(db, id) {
-    return ProductsService.getAllProducts(db)
-      .where({ id })
-      .delete();
+    return ProductsService.getAllProducts(db).where({ id }).delete();
   },
 
   updateProduct(db, id, newProductFields) {
@@ -45,19 +41,25 @@ const ProductsService = {
       product_code: xss(product.product_code),
       product_name: xss(product.product_name),
       product_type: xss(product.product_type),
-      mesh: product.mesh ? product.mesh.map(m => xss(m)) : [],
+      mesh: product.mesh ? product.mesh.map((m) => xss(m)) : [],
       hard_three_eighths: product.hard_three_eighths
-        ? product.hard_three_eighths.map(hte => xss(hte))
+        ? product.hard_three_eighths.map((hte) => xss(hte))
         : [],
       hard_one_quarter: product.hard_one_quarter
-        ? product.hard_one_quarter.map(hoq => xss(hoq))
+        ? product.hard_one_quarter.map((hoq) => xss(hoq))
         : [],
       soft_three_eighths: product.soft_three_eighths
-        ? product.soft_three_eighths.map(ste => xss(ste))
+        ? product.soft_three_eighths.map((ste) => xss(ste))
         : [],
-      prep_bend: product.prep_bend ? product.prep_bend.map(pb => xss(pb)) : [],
-      prep_weld: product.prep_weld ? product.prep_weld.map(pw => xss(pw)) : [],
-      weld: product.weld ? product.weld.map(w => xss(w)) : []
+      prep_bend: product.prep_bend
+        ? product.prep_bend.map((pb) => xss(pb))
+        : [],
+      prep_weld: product.prep_weld
+        ? product.prep_weld.map((pw) => xss(pw))
+        : [],
+      weld: product.weld ? product.weld.map((w) => xss(w)) : [],
+      img_src: xss(product.img_src),
+      img_alt: xss(product.img_alt),
     };
   },
 
@@ -70,9 +72,9 @@ const ProductsService = {
       id: comment.id,
       user_name: xss(comment.user_name),
       content: xss(comment.content),
-      product_id: comment.product_id
+      product_id: comment.product_id,
     };
-  }
+  },
 };
 
 module.exports = ProductsService;
