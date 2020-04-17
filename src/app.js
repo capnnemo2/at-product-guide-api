@@ -3,11 +3,9 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
-const { NODE_ENV } = require("./config");
+const { NODE_ENV, CLIENT_ORIGIN } = require("./config");
 const productsRouter = require("./products/products-router");
 const commentsRouter = require("./comments/comments-router");
-
-const cloudinary = require("cloudinary").v2;
 
 const app = express();
 
@@ -17,7 +15,11 @@ app.use(
   })
 );
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: CLIENT_ORIGIN,
+  })
+);
 
 app.use(function validateBearerToken(req, res, next) {
   const apiToken = process.env.API_TOKEN;
