@@ -1,28 +1,43 @@
-# AT-PRODUCT-GUIDE SERVER
+# Topiary Welding API
 
-## Express Boilerplate
+[LIVE](https://at-product-guide.now.sh)
 
-This is a boilerplate project used for starting new projects
+[REPO](https://github.com/capnnemo2/at-product-guide-api)
 
-## Set up
+[CLIENT](https://github.com/capnnemo2/at-product-guide)
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Summary
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+Topiary Welding seems like a random web application, why does it exist? Excellent question!
 
-## Scripts
+I worked for a company that welds trellises, arbors, and topiary and distributes them to garden nurseries around the country. For anyone who isn't familiar, trellises, arbors, and topiary are metal structures for plants to grow on, around, and near. They can be both practical and decorative.
 
-Start the application `npm start`
+The company has a catalogue of over one hundred products. As a newer employee I was comstantly learning and forgetting new products. Unfortunately, there were several incomplete written resources, but nothing comprehensive available for me to study. I decided to create an app so everything could be collected in one place and available to everyone. I wanted to make sure that any of the employees could reference the specifcations for each product, but also share any personal tips they had garnered through personal experience.
 
-Start nodemon for the application `npm run dev`
+And so Topiary Welding was created. Users can browse all products, filter the list for a certain product type, or search for a specific product.
 
-Run the tests `npm test`
+## Endpoints
 
-## Deploying
+GET /api/products
+POST /api/products
+GET /api/products/:product_id
+DELETE /api/products/:product_id
+PATCH /api/products/:products_id
+GET /api/products/:product_id/comments
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+GET /api/comments
+POST /api/comments
+GET /api/comments/:comment_id
+DELETE /api/comments/:comment_id
+PATCH /api/comments/:comment_id
+
+## Technologies Used
+
+- Node.js
+- Express.js
+- PostgreSQL
+- Postgrator for SQL migration
+- Knex.js for SQL query builder
+- Supertest
+- Mocha
+- Chai
