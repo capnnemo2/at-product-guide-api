@@ -27,7 +27,7 @@ describe("comments endpoints", function () {
       it(`responds with 200 and an empty list`, () => {
         return supertest(app)
           .get("/api/comments")
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200, []);
       });
     });
@@ -43,7 +43,7 @@ describe("comments endpoints", function () {
         );
         return supertest(app)
           .get("/api/comments")
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200, expectedComments);
       });
     });
@@ -61,7 +61,7 @@ describe("comments endpoints", function () {
       it(`removes XSS attack content`, () => {
         return supertest(app)
           .get(`/api/comments`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200)
           .expect((res) => {
             expect(res.body[0].user_name).to.eql(expectedComment.user_name);
@@ -88,7 +88,7 @@ describe("comments endpoints", function () {
         delete newComment[field];
         return supertest(app)
           .post(`/api/comments`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .send(newComment)
           .expect(400, {
             error: { message: `Missing '${field}' in request body` },
@@ -104,7 +104,7 @@ describe("comments endpoints", function () {
 
       return supertest(app)
         .post(`/api/comments`)
-        .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+        .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
         .send(newComment)
         .expect(201)
         .expect((res) => {
@@ -115,7 +115,7 @@ describe("comments endpoints", function () {
         .then((postRes) =>
           supertest(app)
             .get(`/api/comments/${postRes.body.id}`)
-            .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+            .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
             .expect(postRes.body)
         );
     });
@@ -128,7 +128,7 @@ describe("comments endpoints", function () {
 
       return supertest(app)
         .post(`/api/comments`)
-        .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+        .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
         .send(maliciousComment)
         .expect(201)
         .expect((res) => {
@@ -145,7 +145,7 @@ describe("comments endpoints", function () {
         const commentId = 1234567;
         return supertest(app)
           .get(`/api/comments/${commentId}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(404, { error: { message: `Comment doesn't exist` } });
       });
     });
@@ -163,7 +163,7 @@ describe("comments endpoints", function () {
 
         return supertest(app)
           .get(`/api/comments/${commentId}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200, expectedComment);
       });
     });
@@ -181,7 +181,7 @@ describe("comments endpoints", function () {
       it(`removes XSS attack content`, () => {
         return supertest(app)
           .get(`/api/comments/${maliciousComment.id}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200)
           .expect((res) => {
             expect(res.body.user_name).to.eql(expectedComment.user_name);
@@ -198,7 +198,7 @@ describe("comments endpoints", function () {
         const commentId = 1234567;
         return supertest(app)
           .delete(`/api/comments/${commentId}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(404, { error: { message: `Comment doesn't exist` } });
       });
     });
@@ -218,12 +218,12 @@ describe("comments endpoints", function () {
 
         return supertest(app)
           .delete(`/api/comments/${idToRemove}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(204)
           .then((res) =>
             supertest(app)
               .get(`/api/comments`)
-              .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+              .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
               .expect(expectedComments)
           );
       });
@@ -236,7 +236,7 @@ describe("comments endpoints", function () {
         const commentId = 1234567;
         return supertest(app)
           .patch(`/api/comments/${commentId}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(404, { error: { message: `Comment doesn't exist` } });
       });
     });
@@ -262,13 +262,13 @@ describe("comments endpoints", function () {
 
         return supertest(app)
           .patch(`/api/comments/${idToUpdate}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .send(updatedComment)
           .expect(204)
           .then((res) =>
             supertest(app)
               .get(`/api/comments/${idToUpdate}`)
-              .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+              .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
               .expect(expectedComment)
           );
       });
@@ -277,7 +277,7 @@ describe("comments endpoints", function () {
         const idToUpdate = 2;
         return supertest(app)
           .patch(`/api/comments/${idToUpdate}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .send({ irrelevantField: "foo" })
           .expect(400, {
             error: {

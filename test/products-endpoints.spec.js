@@ -27,7 +27,7 @@ describe("products endpoints", function () {
       it(`responds with 200 and an empty list`, () => {
         return supertest(app)
           .get("/api/products")
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200, []);
       });
     });
@@ -43,7 +43,7 @@ describe("products endpoints", function () {
         );
         return supertest(app)
           .get("/api/products")
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200, expectedProducts);
       });
     });
@@ -61,7 +61,7 @@ describe("products endpoints", function () {
       it(`removes XSS attack content`, () => {
         return supertest(app)
           .get("/api/products")
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200)
           .expect((res) => {
             expect(res.body[0].product_code).to.eql(
@@ -99,7 +99,7 @@ describe("products endpoints", function () {
         const productId = 1234567;
         return supertest(app)
           .get(`/api/products/${productId}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(404, { error: { message: `Product doesn't exist` } });
       });
     });
@@ -117,7 +117,7 @@ describe("products endpoints", function () {
 
         return supertest(app)
           .get(`/api/products/${productId}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200, expectedProduct);
       });
     });
@@ -136,7 +136,7 @@ describe("products endpoints", function () {
       it(`removes XSS attack content`, () => {
         return supertest(app)
           .get(`/api/products/${maliciousProduct.id}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200)
           .expect((res) => {
             expect(res.body.product_code).to.eql(expectedProduct.product_code);
@@ -168,7 +168,7 @@ describe("products endpoints", function () {
         const productId = 1234567;
         return supertest(app)
           .get(`/api/products/${productId}/comments`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(404, { error: { message: `Product doesn't exist` } });
       });
     });
@@ -191,7 +191,7 @@ describe("products endpoints", function () {
 
         return supertest(app)
           .get(`/api/products/${productId}/comments`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(200)
           .expect(expectedComments);
       });
@@ -210,7 +210,7 @@ describe("products endpoints", function () {
         delete newProduct[field];
         return supertest(app)
           .post("/api/products")
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .send(newProduct)
           .expect(400, {
             error: { message: `Missing '${field}' in request body` },
@@ -233,7 +233,7 @@ describe("products endpoints", function () {
       };
       return supertest(app)
         .post("/api/products")
-        .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+        .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
         .send(newProduct)
         .expect(201)
         .expect((res) => {
@@ -255,7 +255,7 @@ describe("products endpoints", function () {
         .then((postRes) =>
           supertest(app)
             .get(`/api/products/${postRes.body.id}`)
-            .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+            .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
             .expect(postRes.body)
         );
     });
@@ -267,7 +267,7 @@ describe("products endpoints", function () {
       } = helpers.makeMaliciousProduct();
       return supertest(app)
         .post(`/api/products`)
-        .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+        .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
         .send(maliciousProduct)
         .expect(201)
         .expect((res) => {
@@ -297,7 +297,7 @@ describe("products endpoints", function () {
         const productId = 1234567;
         return supertest(app)
           .delete(`/api/products/${productId}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(404, { error: { message: `Product doesn't exist` } });
       });
     });
@@ -317,12 +317,12 @@ describe("products endpoints", function () {
 
         return supertest(app)
           .delete(`/api/products/${idToRemove}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(204)
           .then((res) =>
             supertest(app)
               .get(`/api/products`)
-              .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+              .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
               .expect(expectedProducts)
           );
       });
@@ -335,7 +335,7 @@ describe("products endpoints", function () {
         const productId = 1234567;
         return supertest(app)
           .patch(`/api/products/${productId}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .expect(404, { error: { message: `Product doesn't exist` } });
       });
     });
@@ -368,13 +368,13 @@ describe("products endpoints", function () {
 
         return supertest(app)
           .patch(`/api/products/${idToUpdate}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .send(updatedProduct)
           .expect(204)
           .then((res) =>
             supertest(app)
               .get(`/api/products/${idToUpdate}`)
-              .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+              .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
               .expect(expectedProduct)
           );
       });
@@ -383,7 +383,7 @@ describe("products endpoints", function () {
         const idToUpdate = 2;
         return supertest(app)
           .patch(`/api/products/${idToUpdate}`)
-          .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+          .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
           .send({ irrelevantField: "foo" })
           .expect(400, {
             error: {
