@@ -3,7 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
-const { NODE_ENV, CLIENT_ORIGIN } = require("./config");
+const { NODE_ENV } = require("./config");
 const productsRouter = require("./products/products-router");
 const commentsRouter = require("./comments/comments-router");
 
@@ -31,7 +31,7 @@ app.use("/api/comments", commentsRouter);
 
 app.get("/", (req, res) => {
   res
-    .set("Authorization", `Bearer ${process.env.API_TOKEN}`)
+    .set("Authorization", `${process.env.REACT_APP_API_TOKEN}`)
     .send("Hello, world");
 });
 

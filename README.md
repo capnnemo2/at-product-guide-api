@@ -2,8 +2,6 @@
 
 [LIVE](https://at-product-guide.now.sh)
 
-[REPO](https://github.com/capnnemo2/at-product-guide-api)
-
 [CLIENT](https://github.com/capnnemo2/at-product-guide)
 
 ## Summary
