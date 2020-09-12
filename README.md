@@ -1,8 +1,8 @@
 # Topiary Welding API
 
-[LIVE](https://at-product-guide.now.sh)
+[LIVE APP](https://at-product-guide.now.sh)
 
-[CLIENT](https://github.com/capnnemo2/at-product-guide)
+[CLIENT REPO](https://github.com/capnnemo2/at-product-guide)
 
 ## Summary
 
